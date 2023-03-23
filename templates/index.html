@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Интернет-магазин</title>
+    <style>
+      body {
+        background-color: #fff;
+        color: #000;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        background-color: #000;
+        color: #fff;
+        padding: 20px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 2.5em;
+        line-height: 1.2;
+      }
+      nav {
+        background-color: #0f0;
+        color: #fff;
+        padding: 10px;
+      }
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      nav li {
+        display: inline-block;
+        margin: 0 10px;
+      }
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      nav a:hover {
+        background-color: #fff;
+        color: #000;
+      }
+      main {
+        padding: 20px;
+      }
+      footer {
+        background-color: #0f0;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Интернет-магазин</h1>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="/">Главная</a></li>
+        <li><a href="/about">О нас</a></li>
+        <li><a href="/register">Регистрация</a></li>
+        <li><a href="/login">Вход</a></li>
+      </ul>
+    </nav>
+    <main>
+      <p>Здесь может быть текст главной страницы.</p>
+          {% for el in data %}
+    <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 font-weight-normal">{{ el.name }}</h4>
+        <img src={{ el.image }} style="max-width: 20%;>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title">{{ el.price }}<small class="text-muted"> рублей</small></h1>
+        <a href='/buy/{{ el.id }}' class="btn btn-lg btn-block btn-outline-primary">Купить</a>
+      </div>
+    </div>
+    {% endfor %}
+    </main>
+    <footer>
+      <p>© Интернет-магазин 2023</p>
+    </footer>
+  </body>
+</html>
