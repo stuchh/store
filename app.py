@@ -1,14 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for, session, abort
+from flask import Flask, render_template, request, redirect, url_for, session, abort, flash
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from flask_login import current_user
+from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from functools import wraps
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///store.db'
 app.config['SECRET_KEY'] = 'super secret key'
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 db = SQLAlchemy(app)
 
@@ -19,7 +21,6 @@ class Product(db.Model):
     price = db.Column(db.Float)
     description = db.Column(db.String(255))
     image = db.Column(db.String(255))
-    in_stock = db.Column(db.Boolean())
 
 
 class User(db.Model):
@@ -33,7 +34,7 @@ class User(db.Model):
 
 
 class ProductView(ModelView):
-    form_columns = ('name', 'price', 'description', 'image', 'in_stock')
+    form_columns = ('name', 'price', 'description', 'image')
 
 
 class UserView(ModelView):
@@ -85,9 +86,46 @@ def register():
         return render_template('register.html')
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+@app.route('/userlogin', methods=['GET', 'POST'])
+def userlogin():
+    if request.method == 'POST':
+        email = request.form['username']
+        password = request.form['password']
+
+        # Find user by email
+        user = User.query.filter_by(email=email).first()
+
+        if not user or not user.password or not user.password.startswith('pbkdf2:sha256:'):
+            # Invalid email or password hash format
+            flash('Invalid email or password')
+            return redirect(url_for('userlogin'))
+
+        if check_password_hash(user.password, password):
+            # Password is correct, login the user
+            flash('Logged in successfully.')
+            return redirect(url_for('index'))
+        else:
+            # Password is incorrect
+            flash('Invalid email or password')
+            return redirect(url_for('userlogin'))
+    else:
+        return render_template('userlogin.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+
 # Обработчик запроса на авторизацию
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/adminlogin', methods=['GET', 'POST'])
+def adminlogin():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -98,7 +136,7 @@ def login():
             session['logged_in'] = True
             return redirect(url_for('admin.index'))
 
-    return render_template('login.html')
+    return render_template('adminlogin.html')
 
 
 # Декоратор для проверки авторизации администратора
@@ -106,7 +144,7 @@ def admin_login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if not session.get('logged_in'):
-            return redirect(url_for('login'))
+            return redirect(url_for('adminlogin'))
         return f(*args, **kwargs)
 
     return decorated_function
