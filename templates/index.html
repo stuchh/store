@@ -80,7 +80,7 @@
       </div>
       <div class="card-body">
         <h1 class="card-title pricing-card-title">{{ el.price }}<small class="text-muted"> рублей</small></h1>
-        <a href='/buy/{{ el.id }}' class="btn btn-lg btn-block btn-outline-primary">Купить</a>
+        <a href='{{ url_for('product_page', product_id=el.id) }}' class="btn btn-lg btn-block btn-outline-primary">подробнее</a>
       </div>
     </div>
     {% endfor %}

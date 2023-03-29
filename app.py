@@ -132,6 +132,14 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+@app.route('/product/<int:product_id>')
+def product_page(product_id):
+    product = Product.query.get(product_id)
+    if product is None:
+        abort(404)
+    return render_template('product.html', product=product)
+
+
 @app.route('/userlogin', methods=['GET', 'POST'])
 def userlogin():
     if request.method == 'POST':
