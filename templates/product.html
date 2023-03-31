@@ -1,91 +1,67 @@
 <!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <title>Интернет-магазин - {{ product.name }}</title>
-        <style>
-      body {
-        background-color: #fff;
-        color: #000;
-        font-family: Arial, sans-serif;
-        font-size: 16px;
-        line-height: 1.5;
-        margin: 0;
-        padding: 0;
-      }
-      header {
-        background-color: #000;
-        color: #fff;
-        padding: 20px;
-      }
-      h1 {
-        margin: 0;
-        font-size: 2.5em;
-        line-height: 1.2;
-      }
-      nav {
-        background-color: #0f0;
-        color: #fff;
-        padding: 10px;
-      }
-      nav ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-      }
-      nav li {
-        display: inline-block;
-        margin: 0 10px;
-      }
-      nav a {
-        color: #fff;
-        text-decoration: none;
-        padding: 10px;
-        border-radius: 5px;
-      }
-      nav a:hover {
-        background-color: #fff;
-        color: #000;
-      }
-      main {
-        padding: 20px;
-      }
-      footer {
-        background-color: #0f0;
-        color: #fff;
-        padding: 20px;
-        text-align: center;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1>Интернет-магазин</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/product_style.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <header class="headers">
+        <nav>
+            <a href="" >Главная</a>
+            <a href="" >Продукты</a>
+            <a href="" >О нас</a>
+        </nav>
+        <nav>
+            <a href="" id="login">Вход</a>
+        </nav>
     </header>
-    <nav>
-      <ul>
-        <li><a href="/">Главная</a></li>
-        <li><a href="/about">О нас</a></li>
-        <li><a href="/register">Регистрация</a></li>
-        <li><a href="/userlogin">Вход</a></li>
-      </ul>
-    </nav>
-    <main>
-      <div class="card mb-4 shadow-sm">
-        <div class="card-header">
-          <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
-          <img src="/static/products_img/{{ product.description }}" style="max-width: 20%;">
+
+    <div class="osn">
+        <div>
+<!--             <img src="svg/arrow-down.svg" class="down">
+            <img src="svg/arrow-up.svg" class="up">
+            <div class="Vimages">
+                <div class="Vimage"></div>
+                <div class="Vimage"></div>
+                <div class="Vimage"></div>
+                <div class="Vimage"></div>
+            </div> -->
+            <div class="Oimage"></div>
         </div>
-        <div class="card-body">
-          <p>{{ product.image }}</p>
-          <h1 class="card-title pricing-card-title">{{ product.price }}<small class="text-muted"> рублей</small></h1>
-          <p>Осталось на складе: {{ product.count_available }}</p>
-          <a href='/buy/{{ product.id }}' class="btn btn-lg btn-block btn-outline-primary">Купить</a>
+        <div class="navigate">
+            <h2>Товар не реальное имбище</h2>
+            <h1>500Р</h1>
+            <h3>Размеры:</h3>
+            <div class="sizes">
+                <button>XXL</button>
+                <button>XXL</button>
+                <button>XXL</button>
+                <button>XXL</button>
+                <button>XXL</button>
+                <button>XXL</button>
+                <button>XXL</button>
+                <button>XXL</button>
+                <button>XXL</button>
+                <button>XXL</button>
+                <button>XXL</button>
+                <button>XXL</button>
+            </div>
+            <div class="pays">
+                <button id="adres">Адрес Доствки</button>
+                <button id="config-pay">Способ оплаты</button>
+                <button id="pay">Купить</button>
+
+            </div>
         </div>
-      </div>
-    </main>
-    <footer>
-      <p>© Интернет-магазин 2023</p>
-    </footer>
-  </body>
+        <div class="description">
+            <h1>О товаре</h1>
+            <h2>Эта вещь - настоящее воплощение качества и стиля! Ее изящный дизайн и непревзойденное качество материала сделают ее незаменимой частью любого гардероба. Этот товар отличается высокой функциональностью и практичностью, что делает его идеальным выбором для любой ситуации. Кроме того, эта вещь прекрасно подойдет как для повседневной носки, так и для особых случаев. Не упустите шанс приобрести этот товар и наслаждаться его безупречным качеством и неповторимым стилем!</h2>
+        </div>
+    </div>
+
+</body>
 </html>

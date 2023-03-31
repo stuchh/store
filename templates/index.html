@@ -1,92 +1,72 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Интернет-магазин</title>
-    <style>
-      body {
-        background-color: #fff;
-        color: #000;
-        font-family: Arial, sans-serif;
-        font-size: 16px;
-        line-height: 1.5;
-        margin: 0;
-        padding: 0;
-      }
-      header {
-        background-color: #000;
-        color: #fff;
-        padding: 20px;
-      }
-      h1 {
-        margin: 0;
-        font-size: 2.5em;
-        line-height: 1.2;
-      }
-      nav {
-        background-color: #0f0;
-        color: #fff;
-        padding: 10px;
-      }
-      nav ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-      }
-      nav li {
-        display: inline-block;
-        margin: 0 10px;
-      }
-      nav a {
-        color: #fff;
-        text-decoration: none;
-        padding: 10px;
-        border-radius: 5px;
-      }
-      nav a:hover {
-        background-color: #fff;
-        color: #000;
-      }
-      main {
-        padding: 20px;
-      }
-      footer {
-        background-color: #0f0;
-        color: #fff;
-        padding: 20px;
-        text-align: center;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1>Интернет-магазин</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/style.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <header class="headers">
+        <nav>
+            <a href="/" >Главная</a>
+            <a href="" >Продукты</a>
+            <a href="/info" >О нас</a>
+        </nav>
+        <nav>
+            <a href="/userlogin" id="login">Вход</a>
+        </nav>
     </header>
-    <nav>
-      <ul>
-        <li><a href="/">Главная</a></li>
-        <li><a href="/about">О нас</a></li>
-        <li><a href="/register">Регистрация</a></li>
-        <li><a href="/userlogin">Вход</a></li>
-      </ul>
-    </nav>
-    <main>
-      <p>Здесь может быть текст главной страницы.</p>
-          {% for el in data %}
-    <div class="card mb-4 shadow-sm">
-      <div class="card-header">
-        <h4 class="my-0 font-weight-normal">{{ el.name }}</h4>
-        <img src=static/products_img/{{ el.description }} style="max-width: 20%;>
-      </div>
-      <div class="card-body">
-        <h1 class="card-title pricing-card-title">{{ el.price }}<small class="text-muted"> рублей</small></h1>
-        <a href='{{ url_for('product_page', product_id=el.id) }}' class="btn btn-lg btn-block btn-outline-primary">подробнее</a>
-      </div>
+    <img src="static/img/Vector 1.png" class="nodrag" id="per">
+    <img src="static/img/logo.png" class="nodrag" id="logo">
+    <div class="title">
+        <h1>РАБОТА НЕ ВОЛК РАБОТА WORK</h1>
+        <h2>Мерч доступен всем</h2>
     </div>
-    {% endfor %}
-    </main>
-    <footer>
-      <p>© Интернет-магазин 2023</p>
-    </footer>
-  </body>
+    <div class="white">
+        <h1>Популярные товары</h1>
+        <div class="listpop">
+            <img src="static/svg/arrow-left.svg" alt="">
+            <div><p>Тупо футбока</p></div>
+            <div><p>Тупо футбока</p></div>
+            <div><p>Тупо футбока</p></div>
+            <img src="static/svg/arrow-right.svg" alt="">
+        </div>
+
+        <h1>Коллекции</h1>
+
+        <div class="collection">
+            <a href=""><div><p>НЕГР</p></div></a>
+            <a href=""><div><p>НЕГР</p></div></a>
+            <a href=""><div><p>НЕГР</p></div></a>
+            <a href=""><div><p>НЕГР</p></div></a>
+            <a href=""><div><p>НЕГР</p></div></a>
+            <a href=""><div><p>НЕГР</p></div></a>
+            <a href=""><div><p>НЕГР</p></div></a>
+            <a href=""><div><p>НЕГР</p></div></a>
+            <a href=""><div><p>НЕГР</p></div></a>
+        </div>
+
+        <h1 id="text-catalog">Каталог</h1>
+
+        <div class="catalog">
+            <a href=""><div><img src="static/img/1.png"><p>футболка</p> <h6>2000р</h6></div></a>
+            <a href=""><div><img src="img/1.png"><p>футбока</p> <h6>2000р</h6></div></a>
+            <a href=""><div><img src="img/1.png"><p>футбока</p> <h6>2000р</h6></div></a>
+            <a href=""><div><img src="img/1.png"><p>футбока</p> <h6>2000р</h6></div></a>
+            <a href=""><div><img src="img/1.png"><p>футбока</p> <h6>2000р</h6></div></a>
+            <a href=""><div><img src="img/1.png"><p>футбока</p> <h6>2000р</h6></div></a>
+            <a href=""><div><img src="img/1.png"><p>футбока</p> <h6>2000р</h6></div></a>
+            <a href=""><div><img src="img/1.png"><p>футбока</p> <h6>2000р</h6></div></a>
+            <a href=""><div><img src="img/1.png"><p>футбока</p> <h6>2000р</h6></div></a>
+            <a href=""><div><img src="img/1.png"><p>футбока</p> <h6>2000р</h6></div></a>
+            <a href=""><div><img src="img/1.png"><p>футбока</p> <h6>2000р</h6></div></a>
+            <a href=""><div><img src="img/1.png"><p>футбока</p> <h6>2000р</h6></div></a>
+        </div>
+        <button id="catalog">больше</button>
+    </div>
+
+</body>
 </html>

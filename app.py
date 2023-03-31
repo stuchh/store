@@ -94,9 +94,9 @@ def index():
     return render_template('index.html', data=items)
 
 
-@app.route('/about')
-def about():
-    return 'Здесь будет страница о нас'
+@app.route('/info')
+def info():
+    return render_template('info.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])

@@ -1,17 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Admin Authentication</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/login.css">
+    <title>Admin authorization</title>
 </head>
 <body>
-	<h2>Login</h2>
-	<form method="POST" action="{{ url_for('adminlogin') }}">
-		<label for="username">Username:</label><br>
-		<input type="text" id="username" name="username"><br>
-		<label for="password">Password:</label><br>
-		<input type="password" id="password" name="password"><br><br>
-		<input type="submit" value="Login">
-	</form>
+
+    <header class="headers">
+        <nav>
+            <a href="/" >Главная</a>
+            <a href="" >Продукты</a>
+            <a href="" >О нас</a>
+        </nav>
+        <nav>
+            <a href="" id="login">Вход</a>
+        </nav>
+    </header>
+
+    <div class="login">
+        <h4>Имя</h4>
+        <input type="text">
+        <h4>Пароль</h4>
+        <input type="text">
+        <button>Войти</button>
+    </div>
+
 </body>
 </html>
