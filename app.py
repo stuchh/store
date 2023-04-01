@@ -32,7 +32,7 @@ class Product(db.Model):
     price = db.Column(db.Float)
     description = db.Column(db.String(255))
     count_available = db.Column(db.Integer)
-    image = db.Colsumn(db.String(255))
+    image = db.Column(db.String(255))
     collection_id = db.Column(db.Integer, db.ForeignKey('collection.id'))
 
 
@@ -42,7 +42,6 @@ class User(db.Model):
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    collection_id = db.Column(db.Integer, external_key=True, unique=True)
 
     def __repr__(self):
         return f'<User {self.name}>'
@@ -89,11 +88,14 @@ class StorageAdminModel(ModelView):
 class UserView(ModelView):
     form_columns = ('name', 'email')
 
+class CollectionView(ModelView):
+    form_columns = ('name', 'description')
+
 
 admin = Admin(app, name='Online Store Admin Panel')
 admin.add_view(StorageAdminModel(Product, db.session))
 admin.add_view(UserView(User, db.session))
-
+admin.add_view(CollectionView(Collection, db.session))
 
 @app.route('/')
 @app.route('/index')
