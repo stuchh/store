@@ -19,14 +19,22 @@ login_manager.init_app(app)
 db = SQLAlchemy(app)
 
 
+class Collection(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    description = db.Column(db.String(255))
+    products = db.relationship('Product', backref='collection', lazy=True)
+
+
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     price = db.Column(db.Float)
     description = db.Column(db.String(255))
-    collection = db.Column(db.String(255))
     count_available = db.Column(db.Integer)
-    image = db.Column(db.String(255))
+    image = db.Colsumn(db.String(255))
+    collection_id = db.Column(db.Integer, db.ForeignKey('collection.id'))
+
 
 
 class User(db.Model):
@@ -34,6 +42,7 @@ class User(db.Model):
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    collection_id = db.Column(db.Integer, external_key=True, unique=True)
 
     def __repr__(self):
         return f'<User {self.name}>'
@@ -57,8 +66,7 @@ class StorageAdminModel(ModelView):
                     os.path.join(app.config['STORAGE'], path)
                 )
 
-                _form.image.data = _form.name.data or storage_file.filename
-                _form.description.data = path
+                _form.image.data = path
 
                 del _form.file
 
@@ -165,6 +173,7 @@ def userlogin():
     else:
         return render_template('userlogin.html')
 
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -204,6 +213,11 @@ def admin_login_required(f):
 @admin_login_required
 def admin():
     return redirect(url_for('admin.index'))
+
+
+@app.route('/catalog')
+def catalog():
+    return render_template('catalog.html')
 
 
 if __name__ == '__main__':

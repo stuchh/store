@@ -1,18 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Регистрация</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/login.css">
+    <title>Document</title>
 </head>
 <body>
-	<h1>Регистрация</h1>
-	<form method="post" action="{{ url_for('register') }}">
-		<label for="name">Имя:</label>
-		<input type="text" id="name" name="name" required><br><br>
-		<label for="email">Email:</label>
-		<input type="email" id="email" name="email" required><br><br>
-		<label for="password">Пароль:</label>
-		<input type="password" id="password" name="password" required><br><br>
-		<button type="submit">Зарегистрироваться</button>
-	</form>
+
+    <header class="headers">
+        <nav>
+            <a href="/" >Главная</a>
+            <a href="" >Продукты</a>
+            <a href="/info" >О нас</a>
+        </nav>
+        <nav>
+            <a href="/" id="login">На главную</a>
+        </nav>
+    </header>
+
+    <div class="login">
+		<form method="post" action="{{ url_for('register') }}">
+        <h1 class="item">Регистрация</h1>
+        <h4>Имя</h4>
+        <input type="text" id="name" name="name" required>
+        <h4>Почта</h4>
+        <input type="email" id="email" name="email" required>
+        <h4>Пароль</h4>
+        <input type="password" id="password" name="password" required>
+        <button>Зарегистрироваться</button>
+        <h5>Есть? <a href="/userlogin">войди!</a></h5>
+    </div>
+
 </body>
 </html>

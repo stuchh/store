@@ -4,13 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6e3ba57d-210c-406e-a050-b39e8d2c0ab3" name="Changes" comment="html товара">
+    <list default="true" id="6e3ba57d-210c-406e-a050-b39e8d2c0ab3" name="Changes" comment="Промежуточный этап: 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/instance/store.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/store.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/adminlogin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/adminlogin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/product.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/userlogin.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/userlogin.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +93,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680112026186</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Промежуточный этап: 1">
+      <created>1680278488488</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1680278488488</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -100,6 +109,7 @@
     <MESSAGE value="Uploading images" />
     <MESSAGE value="Страница товара" />
     <MESSAGE value="html товара" />
-    <option name="LAST_COMMIT_MESSAGE" value="html товара" />
+    <MESSAGE value="Промежуточный этап: 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Промежуточный этап: 1" />
   </component>
 </project>
