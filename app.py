@@ -19,11 +19,17 @@ login_manager.init_app(app)
 db = SQLAlchemy(app)
 
 
-class Collection(db.Model):
+class Catalog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    description = db.Column(db.String(255))
-    products = db.relationship('Product', backref='collection', lazy=True)
+    title = db.Column(db.String(100))
+    products = db.relationship('Product', backref='catalog', lazy=True)
+    image = db.Column(db.String(255))
+
+
+class Collections(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    products = db.relationship('Product', backref='collections', lazy=True)
 
 
 class Product(db.Model):
@@ -33,8 +39,8 @@ class Product(db.Model):
     description = db.Column(db.String(255))
     count_available = db.Column(db.Integer)
     image = db.Column(db.String(255))
-    collection_id = db.Column(db.Integer, db.ForeignKey('collection.id'))
-
+    catalog_id = db.Column(db.Integer, db.ForeignKey('catalog.id'))
+    collection_id = db.Column(db.Integer, db.ForeignKey('collections.id'))
 
 
 class User(db.Model):
@@ -88,20 +94,26 @@ class StorageAdminModel(ModelView):
 class UserView(ModelView):
     form_columns = ('name', 'email')
 
+
 class CollectionView(ModelView):
-    form_columns = ('name', 'description')
+    form_columns = ('title', 'products')
 
 
 admin = Admin(app, name='Online Store Admin Panel')
 admin.add_view(StorageAdminModel(Product, db.session))
+admin.add_view(StorageAdminModel(Catalog, db.session))
+admin.add_view(CollectionView(Collections, db.session))
 admin.add_view(UserView(User, db.session))
-admin.add_view(CollectionView(Collection, db.session))
+
 
 @app.route('/')
 @app.route('/index')
 def index():
+    collections = Collections.query.order_by(Collections.title).all()
+    catalog = Catalog.query.order_by(Catalog.title).all()
     items = Product.query.order_by(Product.price).all()
-    return render_template('index.html', data=items)
+
+    return render_template('index.html', collections=collections, catalog=catalog)
 
 
 @app.route('/info')
@@ -219,7 +231,13 @@ def admin():
 
 @app.route('/catalog')
 def catalog():
-    return render_template('catalog.html')
+    category = request.args.get('category')
+    collections = Collections.query.order_by(Collections.title).all()
+    if category:
+        catalog = Catalog.query.filter_by(category=category).order_by(Catalog.title).all()
+    else:
+        catalog = Catalog.query.order_by(Catalog.title).all()
+    return render_template('catalog.html', collections=collections, catalog=catalog)
 
 
 if __name__ == '__main__':

@@ -24,14 +24,12 @@
         <div class="filters">
             <div class="param1">
                 <h1>Коллеции</h1>
+                {% for el in collections %}
                 <div class="checkboxs">
-                    <label for="col1"><input type="checkbox" id="col1">Коллекция1</label>
-                    <label for="col2"><input type="checkbox" id="col2">Коллекция2</label>
-                    <label for="col3"><input type="checkbox" id="col3">Коллекция3</label>
-                    <label for="col4"><input type="checkbox" id="col4">Коллекция4</label>
-                    <label for="col5"><input type="checkbox" id="col5">Коллекция5</label>
-                </div>
+                    <label for="col1"><input type="checkbox" id="col1">{{ el.title }}</label>
 
+                </div>
+                {% endfor %}
             </div>
             <div class="param2">
                 <h1>Фильтр</h1>
@@ -55,90 +53,14 @@
             </div>
         </div>
         <div class="goods">
+            {% for el in catalog %}
             <a href="">
                 <div>
-                    <img src="https://storage.vsemayki.ru/images/0/1/1941/1941345/previews/people_4_manshortfull_front_white_700.jpg" alt="">
-                    <h2>Товар</h2>
-                    <h1>200р</h1>
+                    <img src="/static/products_img/{{ el.image }}" alt="">
+                    <h2>{{ el.title }}</h2>
                 </div>
             </a>
-            <a href="">
-                <div>
-                    <img src="https://storage.vsemayki.ru/images/0/1/1941/1941345/previews/people_4_manshortfull_front_white_700.jpg" alt="">
-                    <h2>Товар</h2>
-                    <h1>200р</h1>
-                </div>
-            </a>
-            <a href="">
-                <div>
-                    <img src="https://storage.vsemayki.ru/images/0/1/1941/1941345/previews/people_4_manshortfull_front_white_700.jpg" alt="">
-                    <h2>Товар</h2>
-                    <h1>200р</h1>
-                </div>
-            </a>
-            <a href="">
-                <div>
-                    <img src="https://storage.vsemayki.ru/images/0/1/1941/1941345/previews/people_4_manshortfull_front_white_700.jpg" alt="">
-                    <h2>Товар</h2>
-                    <h1>200р</h1>
-                </div>
-            </a>
-            <a href="">
-                <div>
-                    <img src="https://storage.vsemayki.ru/images/0/1/1941/1941345/previews/people_4_manshortfull_front_white_700.jpg" alt="">
-                    <h2>Товар</h2>
-                    <h1>200р</h1>
-                </div>
-            </a>
-            <a href="">
-                <div>
-                    <img src="https://storage.vsemayki.ru/images/0/1/1941/1941345/previews/people_4_manshortfull_front_white_700.jpg" alt="">
-                    <h2>Товар</h2>
-                    <h1>200р</h1>
-                </div>
-            </a>
-            <a href="">
-                <div>
-                    <img src="https://storage.vsemayki.ru/images/0/1/1941/1941345/previews/people_4_manshortfull_front_white_700.jpg" alt="">
-                    <h2>Товар</h2>
-                    <h1>200р</h1>
-                </div>
-            </a>
-            <a href="">
-                <div>
-                    <img src="https://storage.vsemayki.ru/images/0/1/1941/1941345/previews/people_4_manshortfull_front_white_700.jpg" alt="">
-                    <h2>Товар</h2>
-                    <h1>200р</h1>
-                </div>
-            </a>
-            <a href="">
-                <div>
-                    <img src="https://storage.vsemayki.ru/images/0/1/1941/1941345/previews/people_4_manshortfull_front_white_700.jpg" alt="">
-                    <h2>Товар</h2>
-                    <h1>200р</h1>
-                </div>
-            </a>
-            <a href="">
-                <div>
-                    <img src="https://storage.vsemayki.ru/images/0/1/1941/1941345/previews/people_4_manshortfull_front_white_700.jpg" alt="">
-                    <h2>Товар</h2>
-                    <h1>200р</h1>
-                </div>
-            </a>
-            <a href="">
-                <div>
-                    <img src="https://storage.vsemayki.ru/images/0/1/1941/1941345/previews/people_4_manshortfull_front_white_700.jpg" alt="">
-                    <h2>Товар</h2>
-                    <h1>200р</h1>
-                </div>
-            </a>
-            <a href="">
-                <div>
-                    <img src="https://storage.vsemayki.ru/images/0/1/1941/1941345/previews/people_4_manshortfull_front_white_700.jpg" alt="">
-                    <h2>Товар</h2>
-                    <h1>200р</h1>
-                </div>
-            </a>
+            {% endfor %}
         </div>
     </div>
 
