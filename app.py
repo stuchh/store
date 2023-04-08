@@ -4,6 +4,8 @@ import random
 from flask import Flask, render_template, request, redirect, url_for, session, abort, flash
 from flask_admin import Admin, form
 from flask_admin.contrib.sqla import ModelView
+from flask_admin.form import Select2Field
+from flask_admin.model import InlineFormAdmin
 from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from functools import wraps
@@ -57,7 +59,6 @@ class StorageAdminModel(ModelView):
     form_extra_fields = {
         'file': form.FileUploadField('file')
     }
-
     def _change_path_data(self, _form):
         try:
             storage_file = _form.file.data
@@ -91,6 +92,45 @@ class StorageAdminModel(ModelView):
         )
 
 
+class ProductAdminModel(StorageAdminModel):
+    form_extra_fields = {
+        'collection_id': Select2Field('Collection', choices=[]),
+        'file': form.FileUploadField('file')
+    }
+
+    def _change_path_data(self, _form):
+        try:
+            storage_file = _form.file.data
+
+            if storage_file is not None:
+                hash = random.getrandbits(128)
+                ext = storage_file.filename.split('.')[-1]
+                path = '%s.%s' % (hash, ext)
+
+                storage_file.save(
+                    os.path.join(app.config['STORAGE'], path)
+                )
+
+                _form.image.data = path
+
+                del _form.file
+
+        except Exception as ex:
+            pass
+
+        return _form
+
+    def create_form(self, obj=None):
+        form = super(ProductAdminModel, self).create_form(obj=obj)
+        form.collection_id.choices = [(c.id, c.title) for c in Collections.query.all()]
+        return form
+
+    def edit_form(self, obj=None):
+        form = super(StorageAdminModel, self).edit_form(obj=obj)
+        form.collection_id.choices = [(c.id, c.title) for c in Collections.query.all()]
+        return form
+
+
 class UserView(ModelView):
     form_columns = ('name', 'email')
 
@@ -100,7 +140,7 @@ class CollectionView(ModelView):
 
 
 admin = Admin(app, name='Online Store Admin Panel')
-admin.add_view(StorageAdminModel(Product, db.session))
+admin.add_view(ProductAdminModel(Product, db.session))
 admin.add_view(StorageAdminModel(Catalog, db.session))
 admin.add_view(CollectionView(Collections, db.session))
 admin.add_view(UserView(User, db.session))
@@ -232,13 +272,22 @@ def admin():
 @app.route('/catalog')
 def catalog():
     category = request.args.get('category')
-    collections = Collections.query.order_by(Collections.title).all()
+    collections = Catalog.query.order_by(Catalog.title).all()
     if category:
         catalog = Catalog.query.filter_by(category=category).order_by(Catalog.title).all()
     else:
         catalog = Catalog.query.order_by(Catalog.title).all()
-    return render_template('catalog.html', collections=collections, catalog=catalog)
+    return render_template('catalog odej.html', collections=collections, catalog=catalog)
 
+@app.route('/catalog-tags')
+def catalog_tag():
+    collections = request.args.getlist('collection')
+    collection = Collections.query.order_by(Collections.id).all()
+    if not collections:
+        product = Product.query.order_by(Product.name).all()
+    else:
+        product = Product.query.filter(Product.collection_id.in_(collections)).all()
+    return render_template('catalog.html', product=product, collection=collection, collections=collections)
 
 if __name__ == '__main__':
     app.run(debug=True)

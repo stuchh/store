@@ -94,14 +94,17 @@ nav:last-of-type {
     font-size: 25pt;
     margin-bottom: 0px;
     margin-top: 10px;
-    margin-left: 20%;
+    text-align: center;
 }
 
-.filters label{
-    font-family: 'Jost light', sans-serif;
+.filters a{
+    font-family: 'Jost Regular', sans-serif;
+    font-size: 22pt;
+    color: black;
     margin-top: 0px;
     margin-bottom: 0px;
     font-size: 15pt;
+    text-align: center;
 }
 
 .filters input {

@@ -23,41 +23,29 @@
     <div class="osn">
         <div class="filters">
             <div class="param1">
-                <h1>Коллеции</h1>
-                {% for el in collections %}
-                <div class="checkboxs">
-                    <label for="col1"><input type="checkbox" id="col1">{{ el.title }}</label>
+                <h1>Коллекции</h1>
+                <form method="GET" action="/catalog-tags">
+                    <div class="checkboxs">
+                        {% for el in collection %}
+                            <label><input type="checkbox" name="collection" value="{{ el.id }}"
+                                          {% if el.id|string in collections %}checked{% endif %}>{{ el.title }}</label>
+                        {% endfor %}
+                    </div>
+                    <button type="submit">Фильтр</button>
+                </form>
+            </div>
 
-                </div>
-                {% endfor %}
-            </div>
-            <div class="param2">
-                <h1>Фильтр</h1>
-                <div class="checkboxs">
-                    <label for="fil_1_1"><input type="checkbox" id="fil_1_1">Функция</label>
-                    <label for="fil_1_2"><input type="checkbox" id="fil_1_2">Функция</label>
-                    <label for="fil_1_3"><input type="checkbox" id="fil_1_3">Функция</label>
-                    <label for="fil_1_4"><input type="checkbox" id="fil_1_4">Функция</label>
-                    <label for="fil_1_5"><input type="checkbox" id="fil_1_5">Функция</label>
-                </div>
-            </div>
-            <div class="param3">
-                <h1>Фильтр</h1>
-                <div class="checkboxs">
-                    <label for="fil_2_1"><input type="checkbox" id="fil_2_1">Функция</label>
-                    <label for="fil_2_2"><input type="checkbox" id="fil_2_2">Функция</label>
-                    <label for="fil_2_3"><input type="checkbox" id="fil_2_3">Функция</label>
-                    <label for="fil_2_4"><input type="checkbox" id="fil_2_4">Функция</label>
-                    <label for="fil_2_5"><input type="checkbox" id="fil_2_5">Функция</label>
-                </div>
-            </div>
+            <form action="/catalog-tags">
+                <button>Сбросить</button>
+            </form>
         </div>
         <div class="goods">
-            {% for el in catalog %}
-            <a href="">
+            {% for el in product %}
+            <a href="/product/{{ el.id }}">
                 <div>
                     <img src="/static/products_img/{{ el.image }}" alt="">
-                    <h2>{{ el.title }}</h2>
+                    <h2>{{ el.name }}</h2>
+                    <h1>{{ el.price }}Р</h1>
                 </div>
             </a>
             {% endfor %}
