@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/css/product_style.css">
+    <link rel="stylesheet" href="../static/css/product_style.css">
     <title>Document</title>
 </head>
 <body>
@@ -20,35 +20,65 @@
         </nav>
     </header>
 
+    {% block product %}
     <div class="osn">
-        <div>
-<!--             <img src="svg/arrow-down.svg" class="down">
-            <img src="svg/arrow-up.svg" class="up">
-            <div class="Vimages">
-                <div class="Vimage"></div>
-                <div class="Vimage"></div>
-                <div class="Vimage"></div>
-                <div class="Vimage"></div>
-            </div> -->
-            <div class="Oimage"></div>
+        <div class="Oimage">
+            <img src="/static/products_img/{{ product.image }}" alt="">
+        </div>
         </div>
         <div class="navigate">
-            <h2>Товар не реальное имбище</h2>
-            <h1>500Р</h1>
+            <h2>{{ product.name }}</h2>
+            <h1>{{ product.price }}Р</h1>
             <h3>Размеры:</h3>
             <div class="sizes">
-                <button>XXL</button>
-                <button>XXL</button>
-                <button>XXL</button>
-                <button>XXL</button>
-                <button>XXL</button>
-                <button>XXL</button>
-                <button>XXL</button>
-                <button>XXL</button>
-                <button>XXL</button>
-                <button>XXL</button>
-                <button>XXL</button>
-                <button>XXL</button>
+                <label>
+                    <input type="radio" name="size">
+                    <span>XXL</span>
+                </label>
+                <label>
+                    <input type="radio" name="size">
+                    <span>XXL</span>
+                </label>
+                <label>
+                    <input type="radio" name="size">
+                    <span>XXL</span>
+                </label>
+                <label>
+                    <input type="radio" name="size">
+                    <span>XXL</span>
+                </label>
+                                <label>
+                    <input type="radio" name="size">
+                    <span>XXL</span>
+                </label>
+                <label>
+                    <input type="radio" name="size">
+                    <span>XXL</span>
+                </label>
+                <label>
+                    <input type="radio" name="size">
+                    <span>XXL</span>
+                </label>
+                <label>
+                    <input type="radio" name="size">
+                    <span>XXL</span>
+                </label>
+                                <label>
+                    <input type="radio" name="size">
+                    <span>XXL</span>
+                </label>
+                <label>
+                    <input type="radio" name="size">
+                    <span>XXL</span>
+                </label>
+                <label>
+                    <input type="radio" name="size">
+                    <span>XXL</span>
+                </label>
+                <label>
+                    <input type="radio" name="size">
+                    <span>XXL</span>
+                </label>
             </div>
             <div class="pays">
                 <button id="adres">Адрес Доствки</button>
@@ -59,9 +89,10 @@
         </div>
         <div class="description">
             <h1>О товаре</h1>
-            <h2>Эта вещь - настоящее воплощение качества и стиля! Ее изящный дизайн и непревзойденное качество материала сделают ее незаменимой частью любого гардероба. Этот товар отличается высокой функциональностью и практичностью, что делает его идеальным выбором для любой ситуации. Кроме того, эта вещь прекрасно подойдет как для повседневной носки, так и для особых случаев. Не упустите шанс приобрести этот товар и наслаждаться его безупречным качеством и неповторимым стилем!</h2>
+            <h2>{{ product.description }}</h2>
         </div>
     </div>
+    {% endblock %}
 
 </body>
 </html>

@@ -12,7 +12,7 @@
     <header class="headers">
         <nav>
             <a href="/" >Главная</a>
-            <a href="/catalog" >Продукты</a>
+            <a href="/catalog" >Каталог</a>
             <a href="/info" >О нас</a>
         </nav>
         <nav>
@@ -26,14 +26,14 @@
                 <h1>Одежда</h1>
                 <div class="checkboxs">
                     {% for el in collections %}
-                    <a href="">{{ el.title }}</a>
+                    <a href="/catalog/{{ el.id }}">{{ el.title }}</a>
                     {% endfor %}
                 </div>
             </div>
         </div>
         <div class="goods">
             {% for el in catalog %}
-            <a href="">
+            <a href="/catalog/{{ el.id }}">
                 <div>
                     <img src="/static/products_img/{{ el.image }}" alt="">
                     <h2>{{ el.title }}</h2>

@@ -59,6 +59,7 @@ class StorageAdminModel(ModelView):
     form_extra_fields = {
         'file': form.FileUploadField('file')
     }
+
     def _change_path_data(self, _form):
         try:
             storage_file = _form.file.data
@@ -94,6 +95,7 @@ class StorageAdminModel(ModelView):
 
 class ProductAdminModel(StorageAdminModel):
     form_extra_fields = {
+        'catalog_id': Select2Field('Catalog', choices=[]),
         'collection_id': Select2Field('Collection', choices=[]),
         'file': form.FileUploadField('file')
     }
@@ -123,6 +125,7 @@ class ProductAdminModel(StorageAdminModel):
     def create_form(self, obj=None):
         form = super(ProductAdminModel, self).create_form(obj=obj)
         form.collection_id.choices = [(c.id, c.title) for c in Collections.query.all()]
+        form.catalog_id.choices = [(c.id, c.title) for c in Catalog.query.all()]
         return form
 
     def edit_form(self, obj=None):
@@ -279,15 +282,21 @@ def catalog():
         catalog = Catalog.query.order_by(Catalog.title).all()
     return render_template('catalog odej.html', collections=collections, catalog=catalog)
 
-@app.route('/catalog-tags')
-def catalog_tag():
+
+@app.route('/catalog/<int:catalog_id>')
+def catalog_tag(catalog_id):
+    catalogs = Catalog.query.get(catalog_id)
+    if catalogs is None:
+        abort(404)
     collections = request.args.getlist('collection')
     collection = Collections.query.order_by(Collections.id).all()
     if not collections:
-        product = Product.query.order_by(Product.name).all()
+        product = Product.query.filter(Product.catalog_id == catalog_id).order_by(Product.name).all()
     else:
-        product = Product.query.filter(Product.collection_id.in_(collections)).all()
-    return render_template('catalog.html', product=product, collection=collection, collections=collections)
+        product = Product.query.filter(Product.catalog_id == catalog_id, Product.collection_id.in_(collections)).all()
+    return render_template('catalog.html', product=product, collection=collection, collections=collections,
+                           catalog_id=catalog_id)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

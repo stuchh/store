@@ -95,6 +95,11 @@ nav:last-of-type {
     border-radius: 15px;
 }
 
+.Oimage img{
+    width: 102%;
+    border-radius: 15px;
+}
+
 /* .Vimages {
     position: absolute;
     top: 10%;
@@ -130,7 +135,7 @@ nav:last-of-type {
 
 .navigate {
     position: absolute;
-    top: 8%;
+    top: 27%;
     right: 16%;
     width: 600px;
 }
@@ -138,17 +143,17 @@ nav:last-of-type {
 .navigate h2 {
     font-family: 'Jost Regular', sans-serif;
     color: black;
-    font-size: 18pt;
+    font-size: 25pt;
     right: 10%;
-    margin-bottom: 10%;
+    margin-bottom: 7%;
 }
 
 .navigate h1 {
     font-family: 'Jost Regular', sans-serif;
     color: black;
-    font-size: 30pt;
+    font-size: 40pt;
     right: 10%;
-    margin-bottom: 10%;
+    margin-bottom: 7%;
 }
 
 .navigate h3 {
@@ -164,24 +169,8 @@ nav:last-of-type {
     column-width: calc(100% / 3);
 }
 
-.sizes button{
-    font-family: 'Jost Semibold', sans-serif;
-    color: black;
-    font-size: 10pt;
-    right: 10%;
-    margin-bottom: 10%;
-    background-color: #D9D9D9;
-    border: #C2C2C2 solid 1px;
-    text-align: center;
-    border-radius: 8px;
-    width: 110%;
-    height: 4vh;
-    line-height: 4vh;
-    margin-bottom: 5px;
-}
-
-.sizes button:hover{
-    border: #6a9e3f  solid 2px;
+.sizes span:hover{
+    border: green solid 1px;
 }
 
 .pays {
@@ -229,7 +218,7 @@ nav:last-of-type {
 
 .description {
     position: absolute;
-    top: 75%;
+    top: 95%;
     left: 15%;
     width: 70%;
 }
@@ -244,4 +233,109 @@ nav:last-of-type {
     font-family: 'Jost Light', sans-serif;
     font-size: 14pt;
     color: black;
+}
+
+.sizes label {
+  margin-right: 5px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.sizes label span {
+  display: inline-block;
+  cursor: pointer;
+  color: black;
+  font-size: 10pt;
+  right: 10%;
+  margin-bottom: 10%;
+  background-color: #D9D9D9;
+  border: #C2C2C2 solid 1px;
+  text-align: center;
+  border-radius: 8px;
+  width: 110%;
+  height: 4vh;
+  line-height: 4vh;
+  margin-bottom: 5px;
+}
+
+.sizes input[type="radio"] {
+  display: none;
+}
+
+.sizes input[type="radio"]:checked + span {
+  border-color: green;
+}
+
+@media (max-width: 1850px) {
+    .navigate {
+        width: 500px;
+    }
+
+    .Oimage img{
+    width: 100%;
+    border-radius: 15px;
+    }
+
+    .description {
+    position: absolute;
+    top: 115%;
+    left: 15%;
+    width: 70%;
+    }
+
+    .osn {
+        height: 120%;
+    }
+}
+
+@media (max-width: 1650px) {
+    .navigate {
+        width: 450px;
+    }
+
+    .Oimage img{
+    width: 100%;
+    border-radius: 15px;
+    }
+
+    .description {
+    position: absolute;
+    top: 105%;
+    left: 15%;
+    width: 70%;
+    }
+}
+
+@media (max-width: 1450px) {
+    .navigate {
+        width: 400px;
+    }
+        .Oimage img{
+    width: 100%;
+    border-radius: 15px;
+    }
+
+    .description {
+    position: absolute;
+    top: 95%;
+    left: 15%;
+    width: 38%;
+    }
+}
+
+@media (max-width: 1250px) {
+    .navigate {
+        width: 350px;
+    }
+        .Oimage img{
+    width: 100%;
+    border-radius: 15px;
+    }
+
+    .description {
+    position: absolute;
+    top: 90%;
+    left: 15%;
+    width: 36%;
+    }
 }
