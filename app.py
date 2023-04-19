@@ -1,23 +1,19 @@
 import os
 import random
-
 import flask_admin
-from flask import Flask, render_template, request, redirect, url_for, session, abort, flash, Blueprint
-from flask_admin import Admin, form, expose, AdminIndexView
+from flask import Flask, render_template, request, abort, flash
+from flask_admin import form
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.form import Select2Field
-from flask_admin.model import InlineFormAdmin
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_sqlalchemy import SQLAlchemy
-from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-
 from flask_admin import AdminIndexView, expose
 from flask_login import current_user
 from flask import redirect, url_for
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=os.path.abspath('/templates'))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///store.db'
 app.config['SECRET_KEY'] = 'super secret key'
 app.config['STORAGE'] = 'static/products_img/'
@@ -61,12 +57,10 @@ class User(db.Model):
     def __repr__(self):
         return f'<User {self.name}>'
 
-    def is_active(self):
-        return True
-
     def get_id(self):
         return str(self.id)
 
+    # Кринге полный, переделывай
     def is_authenticated(self):
         return True
 
@@ -81,7 +75,7 @@ class Cart(db.Model):
     def __repr__(self):
         return f"<Cart {self.user_id}:{self.product_id}>"
 
-    def add_to_cart(product_id, quantity):
+    def add_to_cart(self, product_id, quantity):
         user_id = current_user.id
         cart_item = Cart.query.filter_by(user_id=user_id, product_id=product_id).first()
         if cart_item:
@@ -91,24 +85,24 @@ class Cart(db.Model):
             db.session.add(cart_item)
         db.session.commit()
 
-    def remove_from_cart(product_id):
+    def remove_from_cart(self, product_id):
         user_id = current_user.id
         cart_item = Cart.query.filter_by(user_id=user_id, product_id=product_id).first()
         if cart_item:
             db.session.delete(cart_item)
             db.session.commit()
 
-    def update_quantity(product_id, quantity):
+    def update_quantity(self, product_id, quantity):
         user_id = current_user.id
         cart_item = Cart.query.filter_by(user_id=user_id, product_id=product_id).first()
         if cart_item:
             cart_item.quantity = quantity
             db.session.commit()
 
-    def get_cart_items(user_id):
+    def get_cart_items(self, user_id):
         return Cart.query.filter_by(user_id=user_id).all()
 
-    def clear_cart(user_id):
+    def clear_cart(self, user_id):
         Cart.query.filter_by(user_id=user_id).delete()
         db.session.commit()
 
@@ -237,7 +231,6 @@ admin.add_view(UserView(User, db.session))
 def index():
     collections = Collections.query.order_by(Collections.title).all()
     catalog = Catalog.query.order_by(Catalog.title).all()
-    items = Product.query.order_by(Product.price).all()
     print(current_user)
     return render_template('index.html', collections=collections, catalog=catalog, user=current_user)
 
@@ -401,7 +394,7 @@ def catalog():
         catalog = Catalog.query.filter_by(category=category).order_by(Catalog.title).all()
     else:
         catalog = Catalog.query.order_by(Catalog.title).all()
-    return render_template('catalog odej.html', collections=collections, catalog=catalog, user=current_user)
+    return render_template('clothing_catalog.html', collections=collections, catalog=catalog, user=current_user)
 
 
 @app.route('/catalog/<int:catalog_id>')
