@@ -13,6 +13,10 @@ from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 
+from flask_admin import AdminIndexView, expose
+from flask_login import current_user
+from flask import redirect, url_for
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///store.db'
 app.config['SECRET_KEY'] = 'super secret key'
@@ -109,11 +113,6 @@ class Cart(db.Model):
         db.session.commit()
 
 
-from flask_admin import AdminIndexView, expose
-from flask_login import current_user
-from flask import redirect, url_for
-
-
 class MyAdminIndexView(AdminIndexView):
     @expose("/")
     def index(self):
@@ -131,6 +130,9 @@ class StorageAdminModel(ModelView):
     form_extra_fields = {
         'file': form.FileUploadField('file')
     }
+
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.is_admin
 
     def _change_path_data(self, _form):
         try:
@@ -172,6 +174,9 @@ class ProductAdminModel(StorageAdminModel):
         'file': form.FileUploadField('file')
     }
 
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.is_admin
+
     def _change_path_data(self, _form):
         try:
             storage_file = _form.file.data
@@ -209,9 +214,15 @@ class ProductAdminModel(StorageAdminModel):
 class UserView(ModelView):
     form_columns = ('name', 'email')
 
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.is_admin
+
 
 class CollectionView(ModelView):
     form_columns = ('title', 'products')
+
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.is_admin
 
 
 admin = flask_admin.Admin(app, index_view=MyAdminIndexView())
@@ -219,6 +230,7 @@ admin.add_view(ProductAdminModel(Product, db.session))
 admin.add_view(StorageAdminModel(Catalog, db.session))
 admin.add_view(CollectionView(Collections, db.session))
 admin.add_view(UserView(User, db.session))
+
 
 @app.route('/')
 @app.route('/index')
@@ -249,7 +261,8 @@ def register():
 
         # Проверяем, что пользователь с таким email уже не зарегистрирован
         if User.query.filter_by(email=email).first():
-            return render_template('register.html', notification='Пользователь с таким email уже зарегистрирован', color='red', user=current_user)
+            return render_template('register.html', notification='Пользователь с таким email уже зарегистрирован',
+                                   color='red', user=current_user)
 
         # Создаем нового пользователя
         user = User(name=name, email=email, password=password_hash)
@@ -258,7 +271,8 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        return render_template('userlogin.html', notification='Регистрация прошла успешно', color='green', user=current_user)
+        return render_template('userlogin.html', notification='Регистрация прошла успешно', color='green',
+                               user=current_user)
     else:
         return render_template('register.html', user=current_user)
 
@@ -276,6 +290,7 @@ def product_page(catalog_id, product_id):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
 @app.route('/userlogin', methods=['GET', 'POST'])
 def userlogin():
     if request.method == 'POST':
@@ -288,7 +303,8 @@ def userlogin():
         if not user or not user.password or not user.password.startswith('pbkdf2:sha256:'):
             # Invalid email or password hash format
             flash('Invalid email or password')
-            return render_template('userlogin.html', notification='Неверный логин или пароль', color='red', user=current_user)
+            return render_template('userlogin.html', notification='Неверный логин или пароль', color='red',
+                                   user=current_user)
 
         if check_password_hash(user.password, password):
             # Password is correct, login the user
@@ -299,11 +315,13 @@ def userlogin():
         else:
             # Password is incorrect
             flash('Invalid email or password')
-            return render_template('userlogin.html', notification='Неверный логин или пароль', color='red', user=current_user)
+            return render_template('userlogin.html', notification='Неверный логин или пароль', color='red',
+                                   user=current_user)
     else:
         return render_template('userlogin.html', user=current_user)
 
-@app.route('/profile',  methods=['GET', 'POST'])
+
+@app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
     if request.method == 'POST':
@@ -330,6 +348,7 @@ def profile():
     else:
         return render_template('profile.html', user=current_user)
 
+
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
@@ -355,6 +374,7 @@ def settings():
 
     return render_template('settings.html', user=current_user)
 
+
 @app.route('/delete_account', methods=['POST'])
 @login_required
 def delete_account():
@@ -371,6 +391,7 @@ def delete_account():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
 
 @app.route('/catalog')
 def catalog():
