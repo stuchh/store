@@ -1,8 +1,9 @@
 import os
 import random
 
-from flask import Flask, render_template, request, redirect, url_for, session, abort, flash
-from flask_admin import Admin, form
+import flask_admin
+from flask import Flask, render_template, request, redirect, url_for, session, abort, flash, Blueprint
+from flask_admin import Admin, form, expose, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.form import Select2Field
 from flask_admin.model import InlineFormAdmin
@@ -10,6 +11,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from flask_sqlalchemy import SQLAlchemy
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///store.db'
@@ -50,6 +52,7 @@ class User(db.Model):
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    is_admin = db.Column(db.Boolean(), default=False)
 
     def __repr__(self):
         return f'<User {self.name}>'
@@ -62,6 +65,66 @@ class User(db.Model):
 
     def is_authenticated(self):
         return True
+
+
+class Cart(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"<Cart {self.user_id}:{self.product_id}>"
+
+    def add_to_cart(product_id, quantity):
+        user_id = current_user.id
+        cart_item = Cart.query.filter_by(user_id=user_id, product_id=product_id).first()
+        if cart_item:
+            cart_item.quantity += quantity
+        else:
+            cart_item = Cart(user_id=user_id, product_id=product_id, quantity=quantity)
+            db.session.add(cart_item)
+        db.session.commit()
+
+    def remove_from_cart(product_id):
+        user_id = current_user.id
+        cart_item = Cart.query.filter_by(user_id=user_id, product_id=product_id).first()
+        if cart_item:
+            db.session.delete(cart_item)
+            db.session.commit()
+
+    def update_quantity(product_id, quantity):
+        user_id = current_user.id
+        cart_item = Cart.query.filter_by(user_id=user_id, product_id=product_id).first()
+        if cart_item:
+            cart_item.quantity = quantity
+            db.session.commit()
+
+    def get_cart_items(user_id):
+        return Cart.query.filter_by(user_id=user_id).all()
+
+    def clear_cart(user_id):
+        Cart.query.filter_by(user_id=user_id).delete()
+        db.session.commit()
+
+
+from flask_admin import AdminIndexView, expose
+from flask_login import current_user
+from flask import redirect, url_for
+
+
+class MyAdminIndexView(AdminIndexView):
+    @expose("/")
+    def index(self):
+        if not current_user:
+            return redirect(url_for('userlogin'))
+        if current_user.is_admin:
+            return super(MyAdminIndexView, self).index()
+        abort(404)
+
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.is_admin
 
 
 class StorageAdminModel(ModelView):
@@ -151,12 +214,11 @@ class CollectionView(ModelView):
     form_columns = ('title', 'products')
 
 
-admin = Admin(app, name='Online Store Admin Panel')
+admin = flask_admin.Admin(app, index_view=MyAdminIndexView())
 admin.add_view(ProductAdminModel(Product, db.session))
 admin.add_view(StorageAdminModel(Catalog, db.session))
 admin.add_view(CollectionView(Collections, db.session))
 admin.add_view(UserView(User, db.session))
-
 
 @app.route('/')
 @app.route('/index')
@@ -231,6 +293,7 @@ def userlogin():
         if check_password_hash(user.password, password):
             # Password is correct, login the user
             login_user(user)
+
             flash('Logged in successfully.')
             return render_template('userlogin.html', notification='Вы успешно вошли!', color='green', user=current_user)
         else:
@@ -309,41 +372,6 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-
-# Обработчик запроса на авторизацию
-@app.route('/adminlogin', methods=['GET', 'POST'])
-def adminlogin():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        # Проверяем, что логин и пароль корректны
-        if username == 'admin' and password == 'password':
-            # Создаем сессию для администратора
-            session['logged_in'] = True
-            return redirect(url_for('admin.index'))
-
-    return render_template('adminlogin.html')
-
-
-# Декоратор для проверки авторизации администратора
-def admin_login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if not session.get('logged_in') and request.path.startswith('/admin'):
-            return redirect(url_for('adminlogin'))
-        return f(*args, **kwargs)
-
-    return decorated_function
-
-
-# Защищенный ресурс, доступный только для администраторов
-@app.route('/admin')
-@admin_login_required
-def admin():
-    return redirect(url_for('admin.index'))
-
-
 @app.route('/catalog')
 def catalog():
     category = request.args.get('category')
@@ -368,6 +396,11 @@ def catalog_tag(catalog_id):
         product = Product.query.filter(Product.catalog_id == catalog_id, Product.collection_id.in_(collections)).all()
     return render_template('catalog.html', product=product, collection=collection, collections=collections,
                            catalog_id=catalog_id, user=current_user)
+
+
+@app.route('/cart')
+def cart():
+    return render_template('cart.html', user=current_user)
 
 
 if __name__ == '__main__':

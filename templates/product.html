@@ -15,8 +15,11 @@
             <a href="/catalog" >Каталог</a>
             <a href="/info" >О нас</a>
         </nav>
-        <nav>
-            <a id="login" {% if user.is_active %} href="/profile">Профиль{% else %}  href="/userlogin"> Вход{% endif %}</a>
+        <nav class="login">
+            {% if user.is_active %}
+            <a href="/cart"><img src="/../static/svg/cart.svg" alt=""></a>
+            {% endif %}
+            <a {% if user.is_active %} href="/profile">Профиль{% else %}  href="/userlogin"> Вход{% endif %}</a>
         </nav>
     </header>
 
@@ -81,7 +84,7 @@
                     </label>
                 </div>
                 <div class="pays">
-                    <button id="adres">Адрес Доствки</button>
+                    <button id="adres">Адрес Доставки</button>
                     <button id="config-pay">Способ оплаты</button>
                     <button id="pay">Купить</button>
 
