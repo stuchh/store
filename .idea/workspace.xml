@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6e3ba57d-210c-406e-a050-b39e8d2c0ab3" name="Changes" comment="Сервер">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/instance/store.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/store.db" afterDir="false" />
-    </list>
+    <list default="true" id="6e3ba57d-210c-406e-a050-b39e8d2c0ab3" name="Changes" comment="База данных" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -185,7 +182,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681994269523</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="База данных">
+      <created>1681995310875</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1681995310875</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,6 +209,7 @@
     <MESSAGE value="все рабочее без оплаты" />
     <MESSAGE value="добавлен профиль" />
     <MESSAGE value="Сервер" />
-    <option name="LAST_COMMIT_MESSAGE" value="Сервер" />
+    <MESSAGE value="База данных" />
+    <option name="LAST_COMMIT_MESSAGE" value="База данных" />
   </component>
 </project>
