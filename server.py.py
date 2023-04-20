@@ -7,7 +7,6 @@ from flask import Flask, render_template, request, redirect, url_for, session, a
 from flask_admin import Admin, form, AdminIndexView, expose
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.form import Select2Field
-from flask_admin.model import InlineFormAdmin
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from functools import wraps
