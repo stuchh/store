@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6e3ba57d-210c-406e-a050-b39e8d2c0ab3" name="Changes" comment="Защита">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/my_admin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/my_admin.iml" afterDir="false" />
+    <list default="true" id="6e3ba57d-210c-406e-a050-b39e8d2c0ab3" name="Changes" comment="Сервер">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forms/user.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/instance/store.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/store.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -182,7 +178,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681852331308</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Сервер">
+      <created>1681994269523</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1681994269523</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -201,6 +204,7 @@
     <MESSAGE value="рабочий каталог" />
     <MESSAGE value="все рабочее без оплаты" />
     <MESSAGE value="добавлен профиль" />
-    <option name="LAST_COMMIT_MESSAGE" value="добавлен профиль" />
+    <MESSAGE value="Сервер" />
+    <option name="LAST_COMMIT_MESSAGE" value="Сервер" />
   </component>
 </project>
