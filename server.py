@@ -77,14 +77,17 @@ class Cart(db.Model):
         return f"<Cart {self.user_id}:{self.product_id}>"
 
     def add_to_cart(product_id, quantity):
-        user_id = current_user.id
-        cart_item = Cart.query.filter_by(user_id=user_id, product_id=product_id).first()
-        if cart_item:
-            cart_item.quantity += quantity
+        if current_user.is_authenticated:
+            user_id = current_user.id
+            cart_item = Cart.query.filter_by(user_id=user_id, product_id=product_id).first()
+            if cart_item:
+                cart_item.quantity += quantity
+            else:
+                cart_item = Cart(user_id=user_id, product_id=product_id, quantity=quantity)
+                db.session.add(cart_item)
+            db.session.commit()
         else:
-            cart_item = Cart(user_id=user_id, product_id=product_id, quantity=quantity)
-            db.session.add(cart_item)
-        db.session.commit()
+            return redirect(url_for('userlogin'))
 
     def remove_from_cart(product_id):
         user_id = current_user.id

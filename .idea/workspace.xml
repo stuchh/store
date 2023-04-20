@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6e3ba57d-210c-406e-a050-b39e8d2c0ab3" name="Changes" comment="База данных" />
+    <list default="true" id="6e3ba57d-210c-406e-a050-b39e8d2c0ab3" name="Changes" comment="req">
+      <change beforePath="$PROJECT_DIR$/.idea/my_admin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/my_admin.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/instance/store.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/store.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -189,7 +194,28 @@
       <option name="project" value="LOCAL" />
       <updated>1681995310875</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Зависимости">
+      <created>1681995722641</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1681995722641</updated>
+    </task>
+    <task id="LOCAL-00019" summary="rename app">
+      <created>1681995776881</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1681995776881</updated>
+    </task>
+    <task id="LOCAL-00020" summary="req">
+      <created>1681996317366</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1681996317366</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,6 +236,9 @@
     <MESSAGE value="добавлен профиль" />
     <MESSAGE value="Сервер" />
     <MESSAGE value="База данных" />
-    <option name="LAST_COMMIT_MESSAGE" value="База данных" />
+    <MESSAGE value="Зависимости" />
+    <MESSAGE value="rename app" />
+    <MESSAGE value="req" />
+    <option name="LAST_COMMIT_MESSAGE" value="req" />
   </component>
 </project>
