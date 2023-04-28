@@ -153,6 +153,8 @@ nav:last-of-type {
     width: 40%;
     min-width: 200px;
     border-radius: 15px;
+    height: 15vw;
+    object-fit: cover;
 }
 
 .box2 {

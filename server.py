@@ -96,6 +96,11 @@ class Cart(db.Model):
             db.session.delete(cart_item)
             db.session.commit()
 
+    def get_quantity(product_id):
+        user_id = current_user.id
+        cart_item = Cart.query.filter_by(user_id=user_id, product_id=product_id).first()
+        return cart_item.quantity
+
     def update_quantity(product_id, quantity):
         user_id = current_user.id
         cart_item = Cart.query.filter_by(user_id=user_id, product_id=product_id).first()
@@ -106,6 +111,10 @@ class Cart(db.Model):
     def get_cart_items(user_id):
         query_items = Cart.query.filter_by(user_id=user_id).all()
         return [Product.query.filter_by(id=item.product_id).first() for item in query_items]
+
+    def get_carts(user_id):
+        query_items = Cart.query.filter_by(user_id=user_id).all()
+        return query_items
 
     def clear_cart(user_id):
         Cart.query.filter_by(user_id=user_id).delete()
@@ -454,11 +463,26 @@ def catalog_tag(catalog_id):
 
 @app.route('/cart', methods=['GET', 'POST'])
 def cart():
+    items_id = Cart.get_carts(current_user.id)
     items = Cart.get_cart_items(current_user.id)
     value = 0
     for item in items:
-        value += item.price
-    return render_template('cart.html', user=current_user, items=items, value=value)
+        val = Cart.get_quantity(item.id) * item.price
+        value += val
+    if request.method == 'POST':
+        data = request.get_json()
+        product_id = data.get('id')
+        total_price = data.get('total_price')
+        Cart.remove_from_cart(product_id)
+    return render_template('cart.html', user=current_user, items=items, value=value, items_id=items_id, Cart=Cart)
+
+
+@app.route('/update_cart', methods=['POST'])
+def update_cart():
+    data = request.get_json()
+    product_id = data.get('id')
+    product_quantity = int(data.get('quantity'))
+    Cart.update_quantity(product_id, product_quantity)
 
 
 if __name__ == '__main__':

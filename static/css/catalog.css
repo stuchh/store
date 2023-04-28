@@ -46,7 +46,6 @@ html {
 body {
     background-color: black;
     color: white;
-    overflow: hidden;
 }
 
 header {
@@ -161,6 +160,7 @@ nav:last-of-type {
     flex-basis: calc(100% / 4);
     max-width: calc(100% / 4.7);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 8px;
+    overflow: hidden;
 }
 
 .goods img {
@@ -168,6 +168,8 @@ nav:last-of-type {
     margin-top: 5%;
     margin-left: 5%;
     width: 90%;
+    height: 14vw;
+    object-fit: cover;
 }
 
 .goods h1 {
@@ -237,6 +239,7 @@ form {
     font-size: 15pt;
     display: inline-flex;
     align-items: center;
+    margin-left: 50%;
 }
 
 input[type="checkbox"] {
@@ -252,7 +255,7 @@ input[type="checkbox"] {
   background-color: #FFF;
   position: relative; /* Добавляем для позиционирования ::before */
   flex-shrink: 0;
-  margin-left: 50%;
+  margin-left: 0;
 }
 
 input[type="checkbox"]:checked {
@@ -404,6 +407,10 @@ input[type="checkbox"]:checked::before {
         max-width: calc(100% / 3.4);
     }
 
+    .goods img {
+        height: 18vw;
+    }
+
     .goods h1 {
         font-size: 10pt;
     }
@@ -521,6 +528,10 @@ input[type="checkbox"]:checked::before {
     .goods a{
         flex-basis: calc(100% / 2);
         max-width: calc(100% / 2.3);
+    }
+
+    .goods img {
+        height: 24vw;
     }
 
     .goods h1 {

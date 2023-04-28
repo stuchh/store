@@ -29,14 +29,14 @@
                 {% for el in items %}
 
                 <div class="ven">
-                    <span class="x  " onclick="this.parentElement.style.display='none';">&times;</span>
+                    <span class="x" price="{{ Cart.get_quantity(el.id) * el.price }}" data-id="{{ el.id }}" onclick="this.parentElement.remove();">&times;</span>
                     <img src="../static/products_img/{{ el.image }}" alt="">
                     <div class="settings">
                         <h1>{{ el.name }}</h1>
                         <h2>{{ el.price }}</h2>
                         <div class="number">
                             <button class="number-minus" type="button" onclick="this.nextElementSibling.stepDown(); this.nextElementSibling.onchange();">-</button>
-                            <input type="number" min="1" value="{{ el.quantity }}" readonly>
+                            <input type="number" onchange="this.previousElementSibling.value = this.value;" class="quantity-input" product_id="{{ el.id }}" min="1" value="{{ Cart.get_quantity(el.id) }}" readonly>
                             <button class="number-plus" type="button" onclick="this.previousElementSibling.stepUp(); this.previousElementSibling.onchange();">+</button>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
             </div>
             <div class="box2">
                 <h1>Общая стоимость</h1>
-                <h2>{{ value }}</h2>
+                <h2 id="total-price">{{ value }}</h2>
                  <div class="pays">
                     <button id="adres">Адрес Доставки</button>
                     <button id="config-pay">Способ оплаты</button>
@@ -55,8 +55,103 @@
         </div>
     </div>
 
+<script>
+    let cartProductIds = [];
+
+    const deleteButtons = document.querySelectorAll('.x');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const productId = event.target.getAttribute('data-id');
+            const productPrice = parseFloat(event.target.getAttribute('price'));
+            const totalPriceElement = document.querySelector('#total-price');
+            let totalPrice = parseFloat(totalPriceElement.textContent.replace(/[^0-9.-]+/g,""));
+            totalPrice -= productPrice;
+            totalPriceElement.textContent = totalPrice.toFixed(1);
+            cartProductIds = cartProductIds.filter(id => id !== productId);
+            fetch('/cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: productId, total_price: totalPrice })
+            }).then(response => {
+                // handle response here
+            }).catch(error => {
+                // handle error here
+            });
+        });
+    });
+
+</script>
 
 
+<script>
+    const quantityButtons = document.querySelectorAll('.number-minus, .number-plus');
+    quantityButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const input = event.target.parentNode.querySelector('input[type="number"]');
+            const productId = input.getAttribute('product_id');
+            const productQuantity = input.value;
+            fetch('/update_cart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: productId, quantity: productQuantity })
+            }).then(response => {
+                // handle response here
+            }).catch(error => {
+                // handle error here
+            });
+        });
+    });
+</script>
+
+
+    <script>
+const plusButtons = document.querySelectorAll('.number-plus');
+const minusButtons = document.querySelectorAll('.number-minus');
+const totalPriceElement = document.querySelector('#total-price');
+
+// функция для обновления общей стоимости
+function updateTotalPrice() {
+  let totalPrice = 0;
+  const quantityInputs = document.querySelectorAll('.quantity-input');
+  quantityInputs.forEach(input => {
+    const value = parseInt(input.value);
+    const price = parseFloat(input.parentNode.previousElementSibling.innerText);
+    totalPrice += value * price;
+  });
+  totalPriceElement.innerText = totalPrice.toFixed(1);
+}
+
+// обработчики для кнопок plus и minus
+plusButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const input = button.parentNode.querySelector('.quantity-input');
+    let value = parseInt(input.value);
+    value + 1;
+    input.value = value;
+    updateTotalPrice();
+  });
+});
+
+minusButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const input = button.parentNode.querySelector('.quantity-input');
+    let value = parseInt(input.value);
+    if (value > 1) {
+      value - 1;
+    }
+    input.value = value;
+    updateTotalPrice();
+  });
+});
+
+// обновить общую стоимость при загрузке страницы
+updateTotalPrice();
+
+    </script>
 
 
 </body>
